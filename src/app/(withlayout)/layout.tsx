@@ -2,26 +2,33 @@
 
 import Contents from '@/components/ui/Contents';
 import Sidebar from '@/components/ui/Sidebar';
+import { isLoggedIn } from '@/services/auth.service';
 import { Layout, theme } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-const { Header, Footer } = Layout;
+// const { Header, Footer } = Layout;
 
 const DashboardLayout = ({children}: {children: React.ReactNode}) => {
-  
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const router = useRouter();
+  const userLoggedIn = isLoggedIn();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(()=> {
+    if(!userLoggedIn){
+      router.push('/login')
+    }
+    setIsLoading(true)
+  }, [router, isLoading])
+
+  if(!isLoading){
+    return <p>Loading...</p>
+  }
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout hasSider>
       <Sidebar/>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
-
        <Contents>{children}</Contents>
-
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
-      </Layout>
     </Layout>
   );
 };

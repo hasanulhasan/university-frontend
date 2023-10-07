@@ -2,7 +2,8 @@
 
 import { Breadcrumb, Layout, theme } from 'antd';
 import UMBreadCrumb from './UMBreadCrumb';
-const { Header, Content, Footer } = Layout;
+import Header from './Header';
+const { Content} = Layout;
 
 const Contents = ({children}: {children: React.ReactNode}) => {
   const base = 'admin'
@@ -12,11 +13,7 @@ const Contents = ({children}: {children: React.ReactNode}) => {
   
   return (
     <Content style={{ margin: '0 16px' }}>
-          {/* <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb> */}
-
+          <Header/>
           <UMBreadCrumb 
            items={[
             {
