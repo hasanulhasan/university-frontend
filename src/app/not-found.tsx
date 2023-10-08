@@ -1,8 +1,14 @@
+import { Empty } from "antd";
+
 const NotFoundPage = () => {
   return (
-    <div>
-      <h1>404! Page was not found</h1>
-    </div>
+    <Empty description={
+      <span>
+        404! Page Not Found
+      </span>
+    } style={{
+     marginTop: '300px'
+    }}/>
   )
 }
 

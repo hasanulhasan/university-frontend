@@ -8,6 +8,8 @@ import { SubmitHandler } from "react-hook-form";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { getUserInfo, isLoggedIn, storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import Loading from "../loading";
+
 type FormValues = {
   id: string;
   password: string
@@ -24,7 +26,7 @@ const LoginPage = () => {
         router.push('/profile')
       }
 
-      storeUserInfo({accessToken: res?.data?.accessToken})
+      storeUserInfo({accessToken: res?.accessToken})
       // console.log(res)
     } catch (error) {
       console.log(error)
