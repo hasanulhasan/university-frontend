@@ -19,7 +19,7 @@ const LoginPage = () => {
   const [userLogin] = useUserLoginMutation();
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({...data}).unwrap();
       if(res?.accessToken){
