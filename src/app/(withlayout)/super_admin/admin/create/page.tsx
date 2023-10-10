@@ -6,7 +6,9 @@ import FormDatePicker from "@/components/Forms/FromDatePicker";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { bloodGroupOptions, departmentOptions, genderOptions } from "@/constants/global";
+import { adminSchema } from "@/schemas/admin";
 import { getUserInfo } from "@/services/auth.service";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 import { SubmitHandler } from "react-hook-form";
 
@@ -40,7 +42,7 @@ const CreateAdminPage = () => {
             }
            ]}/>
       <h1>Create an admin</h1>
-      <Form submitHandler={onSubmit}>
+      <Form submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
         <div style={{
           border: '1px solid #d9d9d9',
           borderRadius: '5px',

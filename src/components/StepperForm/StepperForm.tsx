@@ -1,18 +1,33 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, message, Steps } from 'antd';
+import { FormProvider, useForm } from 'react-hook-form';
+import { getFromLocalStorage, setToLocalStorage } from '@/utils/local-storage';
 
-interface ISteps
-  {
+interface ISteps {
     title?: string;
     content?: React.ReactElement | React.ReactNode
-  }
+}
 interface IStepsProps{
-  steps: ISteps[]
+  steps: ISteps[],
+  submitHandler: (el: any) => void;
 }
 
-const StepperForm= (steps:IStepsProps) => {
+const StepperForm= ( {steps,submitHandler}:IStepsProps ) => {
   const [current, setCurrent] = useState(0);
+  !!getFromLocalStorage('step')? Number(JSON.parse(getFromLocalStorage('step') as string).step) : 0
+
+  useEffect(() => {
+    setToLocalStorage('step', JSON.stringify({step: current}))
+  }, [current])
+
+  const methods = useForm()
+  const {handleSubmit, reset} = methods;
+  const handleStudentOnSubmit = (data: any)=> {
+    submitHandler(data)
+    reset();
+    setToLocalStorage('step', JSON.stringify({step: 0}))
+  }
 
   const next = () => {
     setCurrent(current + 1);
@@ -27,7 +42,9 @@ const StepperForm= (steps:IStepsProps) => {
   return (
     <>
       <Steps current={current} items={items} />
-      <div>{steps[current].content}</div>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(handleStudentOnSubmit)}>
+        <div>{steps[current].content}</div>
       <div style={{ marginTop: 24 }}>
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
@@ -35,7 +52,10 @@ const StepperForm= (steps:IStepsProps) => {
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('Processing complete!')}>
+          <Button 
+          type="primary"
+          htmlType='submit'
+          onClick={() => message.success('Student Created!')}>
             Done
           </Button>
         )}
@@ -45,6 +65,8 @@ const StepperForm= (steps:IStepsProps) => {
           </Button>
         )}
       </div>
+        </form>
+      </FormProvider>
     </>
   );
 };

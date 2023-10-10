@@ -1,60 +1,97 @@
 export const genderOptions = [
   {
     label: 'Male',
-    value: 'Male'
+    value: 'male'
   },
   {
     label: 'Female',
-    value: 'Female'
+    value: 'female'
   }
 ]
 
 export const departmentOptions = [
   {
     label: 'HR Manager',
-    value: 'HR Manager'
+    value: 'hr manager'
   },
   {
     label: 'Finance',
-    value: 'Finance'
+    value: 'finance'
   },
   {
     label: 'Accounting',
-    value: 'Accounting'
+    value: 'accounting'
   }
 ]
 
 export const bloodGroupOptions = [
   {
     label: 'A+',
-    value: 'A+'
+    value: 'a+'
   },
   {
     label: 'AB+',
-    value: 'AB+'
+    value: 'ab+'
   },
   {
     label: 'O+',
-    value: 'O+'
+    value: 'o+'
   },
   {
     label: 'B+',
-    value: 'B+'
+    value: 'b+'
   },
   {
     label: 'A-',
-    value: 'A-'
+    value: 'a-'
   },
   {
     label: 'AB-',
-    value: 'AB-'
+    value: 'ab-'
   },
   {
     label: 'O-',
-    value: 'O-'
+    value: 'o-'
   },
   {
     label: 'B-',
-    value: 'B-'
+    value: 'b-'
   },
+]
+
+export const facultyOptions = [
+  {
+    label: 'Engineering',
+    value: 'engineering'
+  },
+  {
+    label: 'Science',
+    value: 'science'
+  }
+]
+
+export const acDepartmentOptions = [
+  {
+    label: 'CSE',
+    value: 'cse'
+  },
+  {
+    label: 'EEE',
+    value: 'eee'
+  }
+]
+
+export const academicSemesterOptions = [
+  {
+    label: 'Fall 2023',
+    value: 'fall23'
+  },
+  {
+    label: 'Autumn 2023',
+    value: 'autumn2023'
+  },
+  {
+    label: 'Summer 2023',
+    value: 'summer2023'
+  }
 ]
