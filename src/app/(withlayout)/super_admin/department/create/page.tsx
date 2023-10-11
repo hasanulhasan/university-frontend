@@ -1,20 +1,27 @@
+'use client'
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/Forminput";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
+import { useAddDepartmentMutation } from "@/redux/api/departmentApi";
 import { getUserInfo } from "@/services/auth.service";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, message } from "antd";
 type FormValues = {
   title: string
 }
 
 const CreateDepartment = () => {
   const {role} = getUserInfo() as any;
+  const [addDepartment] = useAddDepartmentMutation();
 
   const onSubmit = async (data: any) => {
+    message.loading('Creating......')
     try {
+      await addDepartment(data)
+      message.success('Department Created!')
       console.log(data)
-    } catch (error) {
+    } catch (error: any) {
       console.log(error)
+      message.error(error.message)
     }
   }
 
