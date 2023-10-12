@@ -21,3 +21,10 @@ export type IGenericErrorMessage = {
   message: string
 }
 
+export interface IDepartment {
+  id: string,
+  title: string,
+  createdAt: string,
+  updatedAt: string,
+  _v: number
+}

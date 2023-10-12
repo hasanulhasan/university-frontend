@@ -2,22 +2,35 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UMTable from "@/components/ui/UMTable";
+import { useGetDepartmentsQuery } from "@/redux/api/departmentApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button } from "antd";
 import Link from "next/link";
+import { useState } from "react";
 
 const DepartmentPage = () => {
+  const query: Record<string, any> = {};
+  const [size, setSize] = useState<number>(10)
+  const [page, setPage] = useState<number>(1)
+  const [sortBy, setSortBy] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<string>('');
+  query['limit'] = size;
+  query['page'] = page;
+  query['sortBy'] = sortBy;
+  query['sortOrder'] = sortOrder;
+
   const {role} = getUserInfo() as any;
+  const {data: departments, isLoading} = useGetDepartmentsQuery({...query});
+  console.log(departments);
+  
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Title',
+      dataIndex: 'title'
     },
     {
-      title: 'Age',
+      title: 'Time',
       dataIndex: 'age',
-      key: 'age',
       sorter: (a: any, b: any) => a.age - b.age
     },
     {
@@ -31,30 +44,34 @@ const DepartmentPage = () => {
     }
   ]
 
-  const tableData = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32
-    },
-  ];
+  // const tableData = [
+  //   {
+  //     key: '1',
+  //     name: 'John Brown',
+  //     age: 32
+  //   },
+  //   {
+  //     key: '2',
+  //     name: 'Jim Green',
+  //     age: 42
+  //   },
+  //   {
+  //     key: '3',
+  //     name: 'Joe Black',
+  //     age: 32
+  //   },
+  // ];
 
   const onPaginationChange = (page:number, pageSize:number) => {
     console.log('page', page, 'size', pageSize)
+    setPage(page)
+    setSize(pageSize)
   }
   const onTableChange = (pagination:any, filter:any, sorter:any) => {
     const {order, field} = sorter;
     console.log(order, field)
+    setSortBy(field as string);
+    setSortOrder(order === 'ascend'? 'asc' : 'desc')
   }
 
   return (
@@ -72,9 +89,9 @@ const DepartmentPage = () => {
       </Link >
       </ActionBar>
       <UMTable 
-      loading={false}
+      loading={isLoading}
       columns={columns}
-      dataSource={tableData}
+      dataSource={departments}
       pageSize={5}
       totalPages={10}
       showSizeChanger={true}
